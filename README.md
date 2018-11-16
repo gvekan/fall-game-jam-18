@@ -1,27 +1,30 @@
 # Tränsitiön Time Tour
+
 ### Tränsitiön
-+ Tungsten  - Bas
-+ Cobalt  - Trummor
-+ Iridium  - Gitarr
-+ Lead - Sång
+- Tungsten  - Bas
+- Cobalt  - Trummor
+- Iridium  - Gitarr
+- Lead - Sång
+
 ### Idéer
-+ Hinder
-+ Spelare
-+ Tidsepoker (3+2)
+- Hinder
+- Spelare
+- Tidsepoker (3+2)
 	+ Innan jorden
 	+ Medeltid
 	+ Nutid
 	+ Framtid
 	+ Jordens undergång
-+ Filer (3+2)
-+ Musik (3)
+- Filer (3+2)
+- Musik (3)
 	+ Fett med metal
-+ Slutkommentar
+- Slutkommentar
 	+ "Varför åkte ni inte bara hit lugnt och sen tillbaka i tiden?" 
+
 ### Motor
-+ Spelplansgenerator
-+ Kollisionshanterare
-+ Styrning
-+ Objekthanterare (animation/position)
-+ Musik
-+ Grafik
+- Spelplansgenerator
+- Kollisionshanterare
+- Styrning
+- Objekthanterare (animation/position)
+- Musik
+- Grafik
