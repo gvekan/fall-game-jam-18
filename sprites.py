@@ -12,6 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.lane = 2
 
+
 class Obstacles(pygame.sprite.Group):
     def __init__(self):
         super().__init__(self)
