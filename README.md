@@ -28,3 +28,10 @@
 - Objekthanterare (animation/position)
 - Musik
 - Grafik
+
+### Hinder | Då | Nu | Sen
+- Slott | 3 | 2 | 0
+- Å (bro) | 2 | 3 | 3
+- Fans | 1 | 1 | 1
+- Djurpassage | 3 | 0 | 3
+- Glitch | 0 | 0 | 2 * 3
