@@ -1,7 +1,6 @@
 import pygame
-
-PLAYER_SIZE = (40, 20)
-LANE_SIZE = 200
+from constants import *
+from game_state import state
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -18,7 +17,7 @@ class ScrollObjects(pygame.sprite.Group):
 
     def update(self, *args):
         for s in self.sprites():
-            s.rect.x -= 1 # TODO: Access scroll_length
+            s.rect.x -= state.scroll_length
             if s.rect.x + s.rect.width <= 0:
                 s.kill()
 
@@ -28,5 +27,7 @@ class Obstacles(pygame.sprite.Group):
 
     def update(self, *args):
         for s in self.sprites():
+            # TODO: Check collision
             return
+
 
