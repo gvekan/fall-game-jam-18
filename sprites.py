@@ -1,6 +1,7 @@
 import pygame
 
 PLAYER_SIZE = (40, 20)
+LANE_SIZE = 200
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -9,6 +10,7 @@ class Player(pygame.sprite.Sprite):
         self.image.fill((255,255,255))
 
         self.rect = self.image.get_rect()
+        self.lane = 2
 
 class Obstacles(pygame.sprite.Group):
     def __init__(self):
