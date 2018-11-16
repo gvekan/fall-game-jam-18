@@ -3,9 +3,10 @@ import sprites
 
 WINDOW_SIZE = (1600,900)
 
+
 def main():
     pygame.init()
-
+    clock = pygame.time.Clock()
     screen = pygame.display.set_mode(WINDOW_SIZE)
     player = sprites.Player()
     player.rect.x = 40
@@ -18,9 +19,10 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-
         all.draw(screen)
         pygame.display.flip()
+
+        clock.tick(60)
 
 
 main()
