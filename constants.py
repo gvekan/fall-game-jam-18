@@ -16,7 +16,7 @@ test1.fill((169,169,169))
 test2.fill((0,255,255))
 
 IMG_ROAD = [[pygame.image.load("src/medieval_road.png")], [test1], [test2]]
-DEBUG = False
+DEBUG = True
 
 IMG_MEDIEVAL_ROAD = [pygame.image.load("src/medieval_road.png")]
 IMG_MEDIEVAL_PLAYER = [pygame.image.load("src/tr1.png"), pygame.image.load("src/tr2.png"), pygame.image.load("src/tr1.png"), pygame.image.load("src/tr3.png")]
