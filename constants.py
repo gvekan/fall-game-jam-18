@@ -10,7 +10,7 @@ LANE_HEIGHT = 200
 N_LANES = 3
 LANE_START_Y = 200
 
-DEBUG = False
+DEBUG = True
 
 IMG_MEDIEVAL_ROAD = [pygame.image.load("src/medieval_road.png")]
 IMG_MEDIEVAL_PLAYER = [pygame.image.load("src/tr1.png"), pygame.image.load("src/tr2.png"), pygame.image.load("src/tr1.png"), pygame.image.load("src/tr3.png")]
