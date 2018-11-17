@@ -8,6 +8,7 @@ import generator as g
 
 def main():
     pygame.init()
+    pygame.mixer.init()
 
     clock = pygame.time.Clock()
 

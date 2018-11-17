@@ -4,6 +4,7 @@ import pygame
 
 import sprites
 from constants import *
+from music import Music
 
 
 class State:
@@ -12,7 +13,7 @@ class State:
         self.era = 1
         self.player = sprites.Player()
         self.player.rect.x = PLAYER_X
-        self.player.rect.y = LANE_START_Y + 1.5*LANE_HEIGHT - PLAYER_SIZE[1]//2
+        self.player.rect.y = LANE_START_Y + 1.5*LANE_HEIGHT - PLAYER_SIZE[1] + self.player.hitbox.height//2
 
         self.all_units = pygame.sprite.Group()
 
@@ -34,6 +35,8 @@ class State:
         self.graphic.change_layer(self.player, 2)
         self.graphic.change_layer(road1, 0)
 
+        self.music = Music()
+        self.music.change(self.era)
 
         self.running = True  # True as long as the game should be running
         self.game_over = False
@@ -41,8 +44,12 @@ class State:
         self.kill = set()
 
     @property
+    def score(self):
+        return self.time//30
+
+    @property
     def scroll_length(self):
-        return 14 + self.time//300
+        return 24 + self.time//300
 
     def update(self):
         if not self.game_over:
@@ -60,6 +67,7 @@ class State:
             self.era -= 1
         elif d == Direction.UP:
             self.era += 1
+        self.music.change(self.era)
         if self.era < 0 or self.era > 2:
             self.game_over = True
 

@@ -3,15 +3,16 @@ import pygame
 from constants import Direction
 
 def handle_keydown(event, state):
-    if event.key == pygame.K_UP:
-        state.player.set_direction(Direction.UP)
-    elif event.key == pygame.K_DOWN:
-        state.player.set_direction(Direction.DOWN)
-    elif event.key == pygame.K_z:
-        state.time_travel(Direction.DOWN)
-    elif event.key == pygame.K_x:
-        state.time_travel(Direction.UP)
-    elif event.key == pygame.K_r or event.key == pygame.K_SPACE:
+    if not state.game_over:
+        if event.key == pygame.K_UP:
+            state.player.set_direction(Direction.UP)
+        elif event.key == pygame.K_DOWN:
+            state.player.set_direction(Direction.DOWN)
+        elif event.key == pygame.K_z:
+            state.time_travel(Direction.DOWN)
+        elif event.key == pygame.K_x:
+            state.time_travel(Direction.UP)
+    if event.key == pygame.K_r or event.key == pygame.K_SPACE:
         state.reset = True
 
 

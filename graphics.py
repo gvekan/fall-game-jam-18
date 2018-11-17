@@ -7,7 +7,7 @@ def update_screen(screen, state):
     screen.fill((0,0,0))  # background
     if state.game_over:
         myfont = pygame.font.SysFont('Comic Sans MS', 72)
-        textsurface = myfont.render('GAME OVER, score: {}'.format(state.time//60), False, (255, 255, 255))
+        textsurface = myfont.render('GAME OVER, score: {}'.format(state.score), False, (255, 255, 255))
         screen.blit(textsurface, (100, 100))
     else:
 
@@ -24,7 +24,7 @@ def update_screen(screen, state):
                 pygame.draw.circle(screen, (255, 0, 0), (x, LANE_START_Y//2), 20, 0)
 
         myfont = pygame.font.SysFont('Comic Sans MS', 30)
-        textsurface = myfont.render('Time: {}'.format(state.time // 60), False, (255, 255, 255))
+        textsurface = myfont.render('Time: {}'.format(state.score), False, (255, 255, 255))
         screen.blit(textsurface, (100, LANE_START_Y//2 - 15))
 
     pygame.display.flip()  # update

@@ -24,6 +24,7 @@ test2.fill((0,255,255))
 pygame.display.init()
 pygame.display.set_mode()
 
+
 IMG_ROAD = [[pygame.image.load("src/medieval_road.png").convert_alpha()],
             [pygame.image.load("src/present_road.bmp").convert_alpha()],
             [pygame.image.load("src/future_road.bmp").convert_alpha()]]
@@ -36,13 +37,27 @@ IMG_MEDIEVAL_PLAYER = [pygame.image.load("src/tr1.png").convert_alpha(),
 for i, image in enumerate(IMG_MEDIEVAL_PLAYER):
     IMG_MEDIEVAL_PLAYER[i] = pygame.transform.scale(image, PLAYER_SIZE)
 
+IMG_PRESENT_PLAYER = [pygame.image.load("src/tr_nu.png").convert_alpha(),
+                       pygame.image.load("src/tr_nu2.png").convert_alpha(),
+                       pygame.image.load("src/tr_nu3.png").convert_alpha(),
+                       pygame.image.load("src/tr_nu4.png").convert_alpha()]
+for i, image in enumerate(IMG_PRESENT_PLAYER):
+    IMG_PRESENT_PLAYER[i] = pygame.transform.scale(image, PLAYER_SIZE)
+
+IMG_FUTURE_PLAYER = [pygame.image.load("src/tr_sen1.png").convert_alpha(),
+                       pygame.image.load("src/tr_sen2.png").convert_alpha(),
+                       pygame.image.load("src/tr_sen3.png").convert_alpha(),
+                       pygame.image.load("src/tr_sen2.png").convert_alpha()]
+for i, image in enumerate(IMG_FUTURE_PLAYER):
+    IMG_FUTURE_PLAYER[i] = pygame.transform.scale(image, PLAYER_SIZE)
+
 SPACE = 200
 IMG_BOTTOM_PART = [[pygame.image.load("src/medieval_bottom_part.bmp").convert_alpha()],
                    [pygame.image.load("src/medieval_bottom_part.bmp").convert_alpha()],
                    [pygame.image.load("src/medieval_bottom_part.bmp").convert_alpha()]]
 
 
-IMG_PLAYER = [IMG_MEDIEVAL_PLAYER for _ in range(3)]
+IMG_PLAYER = [IMG_MEDIEVAL_PLAYER, IMG_PRESENT_PLAYER, IMG_FUTURE_PLAYER]
 
 IMG_OBSTACLE = [[pygame.image.load("src/sheep.png").convert_alpha()],
                 [pygame.image.load("src/car.png").convert_alpha()],
@@ -53,6 +68,7 @@ for i, image in enumerate(IMG_OBSTACLE):
 IMG_CASTLE = [[pygame.image.load("src/castle1.png").convert_alpha()],
               [pygame.image.load("src/castle2.png").convert_alpha()],
               [pygame.image.load("src/castle3.png").convert_alpha()]]
+
 
 BACKGROUND_LAYER = 0
 OBSTACLE_LAYER = 1

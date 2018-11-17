@@ -24,7 +24,7 @@ class Generator:
         self.obstacle_next_x -= state.scroll_length
         if self.obstacle_next_x <= 0:
             w = self.add_obstacle(state)
-            self.obstacle_next_x = w+random.randrange(1,3)*SPACE+self.obstacle_next_x
+            self.obstacle_next_x = w+random.random()*3*SPACE+self.obstacle_next_x
 
 
 
@@ -55,7 +55,7 @@ class Generator:
                                   pygame.rect.Rect((1000, 1000), (400, 400)),
                                   pygame.rect.Rect((1000, 1000), (400, 000))],
                                  [(0, 0), (0, -200), (0, 0)])
-        obj = random.choice([animal, castle])
+        obj = random.choice([animal, animal, animal, animal, castle])
         state.all_units.add(obj)
         state.scroll_objects.add(obj)
         state.obstacles.add(obj)
