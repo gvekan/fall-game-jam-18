@@ -3,7 +3,7 @@ import pygame
 import controller
 import game_state
 import graphics
-from vars import *
+from constants import *
 
 def main():
     pygame.init()

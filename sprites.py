@@ -1,5 +1,5 @@
 import pygame
-from vars import *
+from constants import *
 
 class All(pygame.sprite.Group):
     def __init__(self):
@@ -27,22 +27,27 @@ class Animation:
 
 class Player(pygame.sprite.Sprite, Animation):
     def __init__(self):
-        #Test -------
+        """ Test
         images = []
         rgb = [(255,0,0), (0,255,0), (0,0,255)]
         for c in rgb:
             image = pygame.Surface([PLAYER_SIZE[0], PLAYER_SIZE[1]])
             image.fill(c)
             images.append(image)
-        #-------
+        """
+
+        images = [pygame.image.load("src/tr1.png"), pygame.image.load("src/tr2.png"), pygame.image.load("src/tr1.png"), pygame.image.load("src/tr3.png")]
+        for i, image in enumerate(images):
+            images[i] = pygame.transform.scale(image, PLAYER_SIZE)
 
         pygame.sprite.Sprite.__init__(self)
-        Animation.__init__(self, images, 59)
+        Animation.__init__(self, images, 5)
 
         self.image = self.images[0]
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
+        self.speed_mult = 21
 
     def set_direction(self, d):
         if self.direction == Direction.STOP:
@@ -53,15 +58,16 @@ class Player(pygame.sprite.Sprite, Animation):
             elif self.buffer == (Direction.UP and d == Direction.DOWN) or (self.buffer == Direction.DOWN and d == Direction.UP):
                 self.buffer = Direction.STOP
 
-        self.speed_mult = 21
-
     def update(self, state):
-        sprite = self
-        Animation.update(self, sprite)
+        Animation.update(self, self)
         self.rect.y += self.direction.value * state.scroll_length * self.speed_mult
         if (self.rect.y - LANE_START_Y + LANE_HEIGHT//2 + PLAYER_SIZE[1]//2) % LANE_HEIGHT < state.scroll_length * self.speed_mult:
+            if self.rect.y + PLAYER_SIZE[1]//2 < LANE_START_Y or self.rect.y + PLAYER_SIZE[1]//2 > LANE_START_Y + LANE_HEIGHT*N_LANES:
+                state.game_over = True
             self.direction = self.buffer
             self.buffer = Direction.STOP
+
+
 
 
 class ScrollObjects(pygame.sprite.Group):

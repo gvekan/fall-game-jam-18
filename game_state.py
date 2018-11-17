@@ -1,7 +1,7 @@
 import pygame
 
 import sprites
-from vars import *
+from constants import *
 
 
 class State:
@@ -14,5 +14,16 @@ class State:
         self.all_units = pygame.sprite.Group()
         self.all_units.add(self.player)
         self.running = True  # True as long as the game should be running
+        self.game_over = False
         self.kill = set()
 
+    def reset(self):
+        self.__init__()
+
+    def time_travel(self, d):
+        if d == Direction.DOWN:
+            self.era -= 1
+        elif d == Direction.UP:
+            self.era += 1
+        if self.era < 1 or self.era > 3:
+            self.game_over = True
