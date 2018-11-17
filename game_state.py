@@ -46,8 +46,6 @@ class State:
         return 2 + self.time//600
 
     def update(self):
-        if random.random() < 0.005 + 0.0001 * self.time:
-            self.add_obstacle()
         self.all_units.update(self)
         self.obstacles.update(self)
         self.scroll_objects.update(self)

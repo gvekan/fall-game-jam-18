@@ -4,6 +4,7 @@ import controller
 import game_state
 import graphics
 from constants import *
+import generator as g
 
 def main():
     pygame.init()
@@ -14,10 +15,13 @@ def main():
 
     screen = pygame.display.set_mode(WINDOW_SIZE)
 
+    generator = g.Generator()
     while state.running:
         clock.tick(60)
 
         controller.handle_events(state)
+
+        generator.update(state) #Has to be before state.update()
 
         state.update()
 
