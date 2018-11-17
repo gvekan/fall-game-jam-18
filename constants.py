@@ -4,7 +4,7 @@ import pygame
 
 
 
-WINDOW_SIZE = (1600, 900)
+WINDOW_SIZE = (1600, 1000)
 PLAYER_SIZE = (180, 160)
 PLAYER_HITBOX = pygame.rect.Rect((0,0), (140, 100))
 SCENERY_HITBOX = pygame.rect.Rect((0,0), (0,0))
@@ -12,6 +12,8 @@ PLAYER_X = 150
 LANE_HEIGHT = 200
 N_LANES = 3
 LANE_START_Y = 200
+
+
 
 test1 = pygame.Surface((WINDOW_SIZE[0], LANE_HEIGHT*N_LANES))
 test2 = pygame.Surface((WINDOW_SIZE[0], LANE_HEIGHT*N_LANES))
@@ -30,6 +32,9 @@ for i, image in enumerate(IMG_MEDIEVAL_PLAYER):
     IMG_MEDIEVAL_PLAYER[i] = pygame.transform.scale(image, PLAYER_SIZE)
 
 SPACE = 200
+IMG_BOTTOM_PART = [[pygame.image.load("src/medieval_bottom_part.bmp")], [pygame.image.load("src/medieval_bottom_part.bmp")], [pygame.image.load("src/medieval_bottom_part.bmp")]]
+
+
 IMG_PLAYER = [IMG_MEDIEVAL_PLAYER for _ in range(3)]
 
 IMG_OBSTACLE = [[pygame.image.load("src/sheep.png").convert_alpha()], [pygame.image.load("src/car.png").convert_alpha()], [pygame.image.load("src/alien.png").convert_alpha()]]
