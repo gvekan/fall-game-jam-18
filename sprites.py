@@ -21,27 +21,37 @@ class Animation:
 
 
 class AnimationSprite(pygame.sprite.Sprite, Animation):
-    def __init__(self, images, pos, hitbox=SCENERY_HITBOX):
+    def __init__(self, images, pos, hitboxes=SCENERY_HITBOX, offsets = [(0,0), (0,0), (0,0)]):
         Animation.__init__(self, images[1], 5)
         pygame.sprite.Sprite.__init__(self)
 
+        if not isinstance(hitboxes, list):
+            self.hitboxes = [hitboxes, hitboxes, hitboxes]
+        elif len(hitboxes) != 3:
+            raise AttributeError("Hitboxes list needs three elements.")
+        else:
+            self.hitboxes = hitboxes
         self.images = images
+        self.offsets = offsets
         self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.era = 1
-        self.hitbox = hitbox
+        self.hitbox = self.hitboxes[1]
+        self.offset = self.offsets[1]
         self.hitbox.midbottom = self.rect.midbottom
 
 
     def update(self, state):
-        self.hitbox.midbottom = self.rect.midbottom
         if state.era != self.era: #TODO: Change rect for obstacles
             self.era = state.era
             self.animation = self.images[self.era]
             self.image = self.animation[0]
-            print(str(self.era) + "\n")
+            self.hitbox = self.hitboxes[self.era]
+            self.offset = self.offsets[self.era]
+
+        self.hitbox.midbottom = (self.rect.midbottom[0] + self.offset[0], self.rect.midbottom[1] + self.offset[1])
         Animation.update(self, self)
 
     def collision(self, other):
@@ -53,7 +63,6 @@ class Player(pygame.sprite.Sprite, Animation):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         Animation.__init__(self, IMG_PLAYER[1], 5)
-        print(str(IMG_PLAYER))
         self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
@@ -73,11 +82,11 @@ class Player(pygame.sprite.Sprite, Animation):
                 self.buffer = Direction.STOP
 
     def update(self, state):
-        self.hitbox.midbottom = self.rect.midbottom
         if state.era != self.era:
             self.era = state.era
             self.animation = IMG_PLAYER[self.era]
             self.image = self.animation[0]
+        self.hitbox.midbottom = self.rect.midbottom
         Animation.update(self, self)
         self.rect.y += self.direction.value * self.speed
         if (self.rect.y - LANE_START_Y + LANE_HEIGHT//2 + PLAYER_SIZE[1]//2) % LANE_HEIGHT < self.speed:

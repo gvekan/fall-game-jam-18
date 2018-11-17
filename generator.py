@@ -38,8 +38,9 @@ class Generator:
 
     def add_obstacle(self, state: State):
         obj = AnimationSprite(IMG_OBSTACLE,
-                              (WINDOW_SIZE[0], LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2),
-                              pygame.rect.Rect((1000,1000), (140,100)))
+                             (WINDOW_SIZE[0], LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2),
+                             [pygame.rect.Rect((1000,1000), (140,100)),pygame.rect.Rect((1000,1000), (140,100)),pygame.rect.Rect((1000,1000), (140,100))],
+                             [(0,0),(0,0),(0,0)])
         state.all_units.add(obj)
         state.scroll_objects.add(obj)
         state.obstacles.add(obj)
