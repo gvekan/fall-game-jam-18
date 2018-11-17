@@ -2,40 +2,46 @@ import pygame
 from constants import *
 
 class Animation:
-    def __init__(self, images, speed):
+    def __init__(self, animation, speed):
         self.index = 0
-        self.images = images
+        self.animation = animation
         self.speed = speed
         self.count = 0
 
 
     def update(self, sprite: pygame.sprite.Sprite):
-        if len(self.images) > 1:
+        if len(self.animation) > 1:
             self.count += 1
             if self.count == self.speed:
                 self.index += 1
-                if self.index == len(self.images):
+                if self.index == len(self.animation):
                     self.index = 0
-                sprite.image = self.images[self.index]
+                sprite.image = self.animation[self.index]
                 self.count = 0
 
 
 class AnimationSprite(pygame.sprite.Sprite, Animation):
     def __init__(self, images, pos, hitbox):
-        Animation.__init__(self, images, 5)
+        Animation.__init__(self, images[1], 5)
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = self.images[0]
+        self.images = images
+        self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
-        self.images_nr = 1
+        self.era = 1
         self.hitbox = hitbox
         self.hitbox.midbottom = self.rect.midbottom
 
 
     def update(self, state):
         self.hitbox.midbottom = self.rect.midbottom
+        if state.era != self.era: #TODO: Change rect for obstacles
+            self.era = state.era
+            self.animation = self.images[self.era]
+            self.image = self.animation[0]
+            print(str(self.era) + "\n")
         Animation.update(self, self)
 
     def collision(self, other):
@@ -45,22 +51,14 @@ class AnimationSprite(pygame.sprite.Sprite, Animation):
 
 class Player(pygame.sprite.Sprite, Animation):
     def __init__(self):
-        """ Test
-        images = []
-        rgb = [(255,0,0), (0,255,0), (0,0,255)]
-        for c in rgb:
-            image = pygame.Surface([PLAYER_SIZE[0], PLAYER_SIZE[1]])
-            image.fill(c)
-            images.append(image)
-        """
-
         pygame.sprite.Sprite.__init__(self)
-        Animation.__init__(self, IMG_MEDIEVAL_PLAYER, 5)
-
-        self.image = self.images[0]
+        Animation.__init__(self, IMG_PLAYER[1], 5)
+        print(str(IMG_PLAYER))
+        self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
+        self.era = 1
         self.speed = 15
         self.hitbox = PLAYER_HITBOX
         self.hitbox.midbottom = self.rect.midbottom
@@ -76,6 +74,10 @@ class Player(pygame.sprite.Sprite, Animation):
 
     def update(self, state):
         self.hitbox.midbottom = self.rect.midbottom
+        if state.era != self.era:
+            self.era = state.era
+            self.animation = IMG_PLAYER[self.era]
+            self.image = self.animation[0]
         Animation.update(self, self)
         self.rect.y += self.direction.value * self.speed
         if (self.rect.y - LANE_START_Y + LANE_HEIGHT//2 + PLAYER_SIZE[1]//2) % LANE_HEIGHT < self.speed:
