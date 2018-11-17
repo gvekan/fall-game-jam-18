@@ -9,7 +9,7 @@ from constants import *
 class State:
     def __init__(self):
         self.time = 0
-        self.era = 2
+        self.era = 1
         self.player = sprites.Player()
         self.player.rect.x = PLAYER_X
         self.player.rect.y = LANE_START_Y + 1.5*LANE_HEIGHT - PLAYER_SIZE[1]//2
@@ -23,7 +23,7 @@ class State:
         self.graphic = pygame.sprite.LayeredUpdates()
         self.graphic.layers()
 
-        road1 = sprites.AnimationSprite(IMG_MEDIEVAL_ROAD, (0, LANE_START_Y))
+        road1 = sprites.AnimationSprite(IMG_ROAD, (0, LANE_START_Y))
 
         self.scroll_objects.add(road1)
         self.all_units.add(road1, self.player)
@@ -58,6 +58,6 @@ class State:
             self.era -= 1
         elif d == Direction.UP:
             self.era += 1
-        if self.era < 1 or self.era > 3:
+        if self.era < 0 or self.era > 2:
             self.game_over = True
 
