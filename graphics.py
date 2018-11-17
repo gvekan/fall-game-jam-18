@@ -6,7 +6,13 @@ pygame.font.init()
 def update_screen(screen, state):
     screen.fill((150,0,255))  # background
     if state.game_over:
-        screen.blit(IMG_ROAD[state.era][0], (0,0))
+        if state.era == -1:
+            e = 0
+        elif state.era ==3:
+            e = 2
+        else:
+            e = state.era
+        screen.blit(IMG_ROAD[e][0], (0,0))
         myfont = pygame.font.SysFont('Comic Sans MS', 72)
         textsurface = myfont.render('GAME OVER, score: {}'.format(state.score), False, (255, 255, 255))
         screen.blit(textsurface, (100, 100))

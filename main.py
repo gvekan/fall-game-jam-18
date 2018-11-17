@@ -5,8 +5,13 @@ import game_state
 import graphics
 from constants import *
 import generator as g
-
+import os
+import ctypes
 def main():
+    user32 = ctypes.windll.user32
+    screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (screensize[0]//2-WINDOW_SIZE[0]//2 , screensize[1]//2-WINDOW_SIZE[1]//2-10)
+
     pygame.init()
     pygame.mixer.init()
 
@@ -15,7 +20,6 @@ def main():
     state = game_state.State()
 
     screen = pygame.display.set_mode(WINDOW_SIZE)
-
     generator = g.Generator()
 
     while state.running:
