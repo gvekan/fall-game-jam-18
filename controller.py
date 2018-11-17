@@ -5,9 +5,9 @@ from vars import Direction
 
 def handle_keydown(event, state):
     if event.key == pygame.K_UP:
-        state.player.direction = Direction.UP
+        state.player.set_direction(Direction.UP)
     elif event.key == pygame.K_DOWN:
-        state.player.direction = Direction.DOWN
+        state.player.set_direction(Direction.DOWN)
     elif event.key == pygame.K_z and state.era > 0:
         state.era -= 1
     elif event.key == pygame.K_x and state.era < 4:
