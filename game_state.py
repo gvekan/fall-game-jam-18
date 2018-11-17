@@ -9,7 +9,7 @@ from constants import *
 class State:
     def __init__(self):
         self.time = 0
-        self.era = 2
+        self.era = 1
         self.player = sprites.Player()
         self.player.rect.x = PLAYER_X
         self.player.rect.y = LANE_START_Y + 1.5*LANE_HEIGHT - PLAYER_SIZE[1]//2
@@ -23,11 +23,13 @@ class State:
         self.graphic = pygame.sprite.LayeredUpdates()
         self.graphic.layers()
 
-        road1 = sprites.AnimationSprite(IMG_MEDIEVAL_ROAD, (0, LANE_START_Y), SCENERY_HITBOX)
+        road1 = sprites.AnimationSprite(IMG_ROAD, (0, LANE_START_Y))
 
         self.scroll_objects.add(road1)
         self.all_units.add(road1, self.player)
         self.graphic.add(road1, self.player)
+
+        self.set_bottom()
 
         self.graphic.change_layer(self.player, 2)
         self.graphic.change_layer(road1, 0)
@@ -40,7 +42,7 @@ class State:
 
     @property
     def scroll_length(self):
-        return 7 + self.time//600
+        return 14 + self.time//300
 
     def update(self):
         if not self.game_over:
@@ -58,6 +60,15 @@ class State:
             self.era -= 1
         elif d == Direction.UP:
             self.era += 1
-        if self.era < 1 or self.era > 3:
+        if self.era < 0 or self.era > 2:
             self.game_over = True
+
+    def set_bottom(self):
+        for x in range(0,WINDOW_SIZE[0], 200):
+            a = sprites.AnimationSprite(IMG_BOTTOM_PART, (x, WINDOW_SIZE[1]-LANE_HEIGHT))
+            self.scroll_objects.add(a)
+            self.all_units.add(a, self.player)
+            self.graphic.add(a, self.player)
+            self.graphic.change_layer(a, BACKGROUND_LAYER)
+
 

@@ -2,40 +2,56 @@ import pygame
 from constants import *
 
 class Animation:
-    def __init__(self, images, speed):
+    def __init__(self, animation, speed):
         self.index = 0
-        self.images = images
+        self.animation = animation
         self.speed = speed
         self.count = 0
 
 
     def update(self, sprite: pygame.sprite.Sprite):
-        if len(self.images) > 1:
+        if len(self.animation) > 1:
             self.count += 1
             if self.count == self.speed:
                 self.index += 1
-                if self.index == len(self.images):
+                if self.index == len(self.animation):
                     self.index = 0
-                sprite.image = self.images[self.index]
+                sprite.image = self.animation[self.index]
                 self.count = 0
 
 
 class AnimationSprite(pygame.sprite.Sprite, Animation):
-    def __init__(self, images, pos, hitbox):
-        Animation.__init__(self, images, 5)
+    def __init__(self, images, pos, hitboxes=SCENERY_HITBOX, offsets = [(0,0), (0,0), (0,0)]):
+        Animation.__init__(self, images[1], 5)
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = self.images[0]
+        if not isinstance(hitboxes, list):
+            self.hitboxes = [hitboxes, hitboxes, hitboxes]
+        elif len(hitboxes) != 3:
+            raise AttributeError("Hitboxes list needs three elements.")
+        else:
+            self.hitboxes = hitboxes
+        self.images = images
+        self.offsets = offsets
+        self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
-        self.images_nr = 1
-        self.hitbox = hitbox
+        self.era = 1
+        self.hitbox = self.hitboxes[1]
+        self.offset = self.offsets[1]
         self.hitbox.midbottom = self.rect.midbottom
 
 
     def update(self, state):
-        self.hitbox.midbottom = self.rect.midbottom
+        if state.era != self.era: #TODO: Change rect for obstacles
+            self.era = state.era
+            self.animation = self.images[self.era]
+            self.image = self.animation[0]
+            self.hitbox = self.hitboxes[self.era]
+            self.offset = self.offsets[self.era]
+
+        self.hitbox.midbottom = (self.rect.midbottom[0] + self.offset[0], self.rect.midbottom[1] + self.offset[1])
         Animation.update(self, self)
 
     def collision(self, other):
@@ -45,23 +61,14 @@ class AnimationSprite(pygame.sprite.Sprite, Animation):
 
 class Player(pygame.sprite.Sprite, Animation):
     def __init__(self):
-        """ Test
-        images = []
-        rgb = [(255,0,0), (0,255,0), (0,0,255)]
-        for c in rgb:
-            image = pygame.Surface([PLAYER_SIZE[0], PLAYER_SIZE[1]])
-            image.fill(c)
-            images.append(image)
-        """
-
         pygame.sprite.Sprite.__init__(self)
-        Animation.__init__(self, IMG_MEDIEVAL_PLAYER, 5)
-
-        self.image = self.images[0]
+        Animation.__init__(self, IMG_PLAYER[1], 5)
+        self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
-        self.speed = 15
+        self.era = 1
+        self.speed = 30
         self.hitbox = PLAYER_HITBOX
         self.hitbox.midbottom = self.rect.midbottom
 
@@ -75,6 +82,10 @@ class Player(pygame.sprite.Sprite, Animation):
                 self.buffer = Direction.STOP
 
     def update(self, state):
+        if state.era != self.era:
+            self.era = state.era
+            self.animation = IMG_PLAYER[self.era]
+            self.image = self.animation[0]
         self.hitbox.midbottom = self.rect.midbottom
         Animation.update(self, self)
         self.rect.y += self.direction.value * self.speed
