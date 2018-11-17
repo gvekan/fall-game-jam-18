@@ -24,7 +24,7 @@ class State:
         self.graphic = pygame.sprite.LayeredUpdates()
         self.graphic.layers()
 
-        road1 = sprites.AnimationSprite(IMG_ROAD, (0, LANE_START_Y))
+        road1 = sprites.AnimationSprite(IMG_ROAD, (0, 0))
 
         self.scroll_objects.add(road1)
         self.all_units.add(road1, self.player)
