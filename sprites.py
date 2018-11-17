@@ -21,7 +21,7 @@ class Animation:
 
 
 class AnimationSprite(pygame.sprite.Sprite, Animation):
-    def __init__(self, images, pos):
+    def __init__(self, images, pos, hitbox):
         Animation.__init__(self, images, 5)
         pygame.sprite.Sprite.__init__(self)
 
@@ -30,9 +30,16 @@ class AnimationSprite(pygame.sprite.Sprite, Animation):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.images_nr = 1
+        self.hitbox = hitbox
+        self.hitbox.midbottom = self.rect.midbottom
+
 
     def update(self, state):
+        self.hitbox.midbottom = self.rect.midbottom
         Animation.update(self, self)
+
+    def collision(self, other):
+        return self.hitbox.colliderect(other.hitbox)
 
 
 
@@ -54,7 +61,9 @@ class Player(pygame.sprite.Sprite, Animation):
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
-        self.speed = 10
+        self.speed = 15
+        self.hitbox = PLAYER_HITBOX
+        self.hitbox.midbottom = self.rect.midbottom
 
     def set_direction(self, d):
         if self.direction == Direction.STOP:
@@ -66,6 +75,7 @@ class Player(pygame.sprite.Sprite, Animation):
                 self.buffer = Direction.STOP
 
     def update(self, state):
+        self.hitbox.midbottom = self.rect.midbottom
         Animation.update(self, self)
         self.rect.y += self.direction.value * self.speed
         if (self.rect.y - LANE_START_Y + LANE_HEIGHT//2 + PLAYER_SIZE[1]//2) % LANE_HEIGHT < self.speed:
@@ -73,7 +83,6 @@ class Player(pygame.sprite.Sprite, Animation):
                 state.game_over = True
             self.direction = self.buffer
             self.buffer = Direction.STOP
-
 
 
 class ScrollObjects(pygame.sprite.Group):
@@ -93,7 +102,7 @@ class Obstacles(pygame.sprite.Group):
 
     def update(self, state):
         for s in self.sprites():
-            if s.rect.colliderect(state.player.rect):
+            if s.collision(state.player):
                 state.game_over = True
 
 

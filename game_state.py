@@ -23,7 +23,7 @@ class State:
         self.graphic = pygame.sprite.LayeredUpdates()
         self.graphic.layers()
 
-        road1 = sprites.AnimationSprite(IMG_MEDIEVAL_ROAD, (0, LANE_START_Y))
+        road1 = sprites.AnimationSprite(IMG_MEDIEVAL_ROAD, (0, LANE_START_Y), SCENERY_HITBOX)
 
         self.scroll_objects.add(road1)
         self.all_units.add(road1, self.player)
@@ -40,7 +40,7 @@ class State:
 
     @property
     def scroll_length(self):
-        return 4 + self.time//600
+        return 7 + self.time//600
 
     def update(self):
         if not self.game_over:
