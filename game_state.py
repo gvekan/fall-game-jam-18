@@ -43,18 +43,19 @@ class State:
 
     @property
     def scroll_length(self):
-        return 2 + self.time//600
+        return 4 + self.time//600
 
     def update(self):
-        if random.random() < 0.005 + 0.0001 * self.time:
-            self.add_obstacle()
-        self.all_units.update(self)
-        self.obstacles.update(self)
-        self.scroll_objects.update(self)
-        self.graphic.update(self)
-        for unit in self.kill:
-            unit.kill()
-        self.time += 1
+        if not self.game_over:
+            if random.random() < 0.005 + 0.0001 * self.time//600:
+                self.add_obstacle()
+            self.all_units.update(self)
+            self.obstacles.update(self)
+            self.scroll_objects.update(self)
+            self.graphic.update(self)
+            for unit in self.kill:
+                unit.kill()
+            self.time += 1
 
 
     def time_travel(self, d):

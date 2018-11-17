@@ -55,7 +55,7 @@ class Player(pygame.sprite.Sprite, Animation):
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
-        self.speed_mult = 2
+        self.speed = 10
 
     def set_direction(self, d):
         if self.direction == Direction.STOP:
@@ -68,8 +68,8 @@ class Player(pygame.sprite.Sprite, Animation):
 
     def update(self, state):
         Animation.update(self, self)
-        self.rect.y += self.direction.value * state.scroll_length * self.speed_mult
-        if (self.rect.y - LANE_START_Y + LANE_HEIGHT//2 + PLAYER_SIZE[1]//2) % LANE_HEIGHT < state.scroll_length * self.speed_mult:
+        self.rect.y += self.direction.value * self.speed
+        if (self.rect.y - LANE_START_Y + LANE_HEIGHT//2 + PLAYER_SIZE[1]//2) % LANE_HEIGHT < self.speed:
             if self.rect.y + PLAYER_SIZE[1]//2 < LANE_START_Y or self.rect.y + PLAYER_SIZE[1]//2 > LANE_START_Y + LANE_HEIGHT*N_LANES:
                 state.game_over = True
             self.direction = self.buffer

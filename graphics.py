@@ -7,7 +7,7 @@ def update_screen(screen, state):
     screen.fill((50 * state.era, 5 * state.era, 20 * state.era))  # background
     if state.game_over:
         myfont = pygame.font.SysFont('Comic Sans MS', 72)
-        textsurface = myfont.render('GAME OVER', False, (255, 255, 255))
+        textsurface = myfont.render('GAME OVER, score: {}'.format(state.time//60), False, (255, 255, 255))
         screen.blit(textsurface, (100, 100))
     else:
         for i in range(3):
