@@ -20,5 +20,5 @@ def handle_events(state):
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             handle_keydown(event, state)
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             state.running = False

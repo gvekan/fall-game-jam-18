@@ -9,13 +9,14 @@ class Animation:
         self.count = 0
 
     def update(self, sprite: pygame.sprite.Sprite):
-        self.count += 1
-        if self.count == self.speed:
-            self.index += 1
-            if self.index == len(self.images):
-                self.index = 0
-            sprite.image = self.images[self.index]
-            self.count = 0
+        if len(self.images) > 1:
+            self.count += 1
+            if self.count == self.speed:
+                self.index += 1
+                if self.index == len(self.images):
+                    self.index = 0
+                sprite.image = self.images[self.index]
+                self.count = 0
 
 
 class AnimationSprite(pygame.sprite.Sprite, Animation):

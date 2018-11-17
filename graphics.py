@@ -13,7 +13,7 @@ def update_screen(screen, state):
         for i in range(3):
             pygame.draw.rect(screen, [128 - 32 * state.era, 127 + 32 * state.era, 0],
                 [0, (i + 1) * LANE_HEIGHT, WINDOW_SIZE[0], LANE_HEIGHT - 1])  # lanes
-        state.all_units.draw(screen)  # units
+        state.graphic.draw(screen)  # units
 
         pygame.draw.line(screen, (255,255,255), (WINDOW_SIZE[0]//2, LANE_START_Y//2), (WINDOW_SIZE[0]*3/4, LANE_START_Y//2), 5)
         for i, x in enumerate(range(WINDOW_SIZE[0]//2, (WINDOW_SIZE[0]*3)//4 +1, WINDOW_SIZE[0]//16)):
