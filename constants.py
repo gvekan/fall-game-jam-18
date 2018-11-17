@@ -10,6 +10,10 @@ LANE_START_Y = 200
 
 IMG_MEDIEVAL_ROAD = [pygame.image.load("src/medieval_road.png")]
 
+BACKGROUND_LAYER = 0
+OBSTACLE_LAYER = 1
+PLAYER_LAYER = 2
+
 class Direction(Enum):
     UP = -1
     STOP = 0
