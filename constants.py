@@ -7,6 +7,10 @@ LANE_HEIGHT = 200
 N_LANES = 3
 LANE_START_Y = 200
 
+BACKGROUND_LAYER = 0
+OBSTACLE_LAYER = 1
+PLAYER_LAYER = 2
+
 class Direction(Enum):
     UP = -1
     STOP = 0

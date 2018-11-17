@@ -55,7 +55,7 @@ class Player(pygame.sprite.Sprite, Animation):
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
-        self.speed_mult = 5
+        self.speed_mult = 2
 
     def set_direction(self, d):
         if self.direction == Direction.STOP:
@@ -92,10 +92,11 @@ class Obstacles(pygame.sprite.Group):
     def __init__(self):
         super().__init__(self)
 
-    def update(self, *args):
+    def update(self, state):
         for s in self.sprites():
-            # TODO: Check collision
-            return
+            if s.rect.colliderect(state.player.rect):
+                state.game_over = True
+
 
 
 

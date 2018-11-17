@@ -21,4 +21,8 @@ def update_screen(screen, state):
             if state.era == i:
                 pygame.draw.circle(screen, (255, 0, 0), (x, LANE_START_Y//2), 20, 0)
 
+        myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        textsurface = myfont.render('Time: {}'.format(state.time // 60), False, (255, 255, 255))
+        screen.blit(textsurface, (100, 100))
+
     pygame.display.flip()  # update
