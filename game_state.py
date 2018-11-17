@@ -47,8 +47,6 @@ class State:
 
     def update(self):
         if not self.game_over:
-            if random.random() < 0.005 + 0.0001 * self.time//600:
-                self.add_obstacle()
             self.all_units.update(self)
             self.obstacles.update(self)
             self.scroll_objects.update(self)
