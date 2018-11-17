@@ -21,7 +21,7 @@ class Animation:
 
 
 class AnimationSprite(pygame.sprite.Sprite, Animation):
-    def __init__(self, images, pos):
+    def __init__(self, images, pos, hitbox):
         Animation.__init__(self, images[1], 5)
         pygame.sprite.Sprite.__init__(self)
 
@@ -31,14 +31,21 @@ class AnimationSprite(pygame.sprite.Sprite, Animation):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
         self.era = 1
+        self.hitbox = hitbox
+        self.hitbox.midbottom = self.rect.midbottom
+
 
     def update(self, state):
+        self.hitbox.midbottom = self.rect.midbottom
         if state.era != self.era: #TODO: Change rect for obstacles
             self.era = state.era
             self.animation = self.images[self.era]
             self.image = self.animation[0]
             print(str(self.era) + "\n")
         Animation.update(self, self)
+
+    def collision(self, other):
+        return self.hitbox.colliderect(other.hitbox)
 
 
 
@@ -51,8 +58,10 @@ class Player(pygame.sprite.Sprite, Animation):
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
-        self.speed = 10
         self.era = 1
+        self.speed = 15
+        self.hitbox = PLAYER_HITBOX
+        self.hitbox.midbottom = self.rect.midbottom
 
     def set_direction(self, d):
         if self.direction == Direction.STOP:
@@ -64,6 +73,7 @@ class Player(pygame.sprite.Sprite, Animation):
                 self.buffer = Direction.STOP
 
     def update(self, state):
+        self.hitbox.midbottom = self.rect.midbottom
         if state.era != self.era:
             self.era = state.era
             self.animation = IMG_PLAYER[self.era]
@@ -75,7 +85,6 @@ class Player(pygame.sprite.Sprite, Animation):
                 state.game_over = True
             self.direction = self.buffer
             self.buffer = Direction.STOP
-
 
 
 class ScrollObjects(pygame.sprite.Group):
@@ -95,7 +104,7 @@ class Obstacles(pygame.sprite.Group):
 
     def update(self, state):
         for s in self.sprites():
-            if s.rect.colliderect(state.player.rect):
+            if s.collision(state.player):
                 state.game_over = True
 
 
