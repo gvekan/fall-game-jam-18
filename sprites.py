@@ -9,17 +9,45 @@ class All(pygame.sprite.Group):
         for s in self.sprites():
             s.update()
 
+class Animation:
+    def __init__(self, images, speed):
+        self.index = 0
+        self.images = images
+        self.speed = speed
+        self.count = 0
 
-class Player(pygame.sprite.Sprite):
+    def update(self, sprite: pygame.sprite.Sprite):
+        self.count += 1
+        if self.count == self.speed:
+            self.index += 1
+            if self.index == len(self.images):
+                self.index = 0
+            sprite.image = self.images[self.index]
+            self.count = 0
+
+class Player(pygame.sprite.Sprite, Animation):
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface([PLAYER_SIZE[0], PLAYER_SIZE[1]])
-        self.image.fill((255,255,255))
+        #Test -------
+        images = []
+        rgb = [(255,0,0), (0,255,0), (0,0,255)]
+        for c in rgb:
+            image = pygame.Surface([PLAYER_SIZE[0], PLAYER_SIZE[1]])
+            image.fill(c)
+            images.append(image)
+        #-------
 
+        pygame.sprite.Sprite.__init__(self)
+        Animation.__init__(self, images, 59)
+
+        self.image = self.images[0]
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
 
+        self.speed_mult = 21
+
     def update(self, state):
+        sprite = self
+        Animation.update(self, sprite)
         self.rect.y += self.direction.value * state.scroll_length * self.speed_mult
         #for h in range(LANE_START_Y+LANE_HEIGHT//2, LANE_START_Y*N_LANES+LANE_HEIGHT//2, LANE_HEIGHT):
         #    if (self.direction == Direction.UP and self.rect.y < h) or (self.direction == Direction.DOWN and self.rect.y > h):
@@ -48,18 +76,5 @@ class Obstacles(pygame.sprite.Group):
             return
 
 
-class Animation:
-    def __init__(self, images, speed):
-        self.index = 0
-        self.images = images
-        self.speed = speed
-        self.count = 0
 
-    def update(self, sprite: pygame.sprite.Sprite):
-        self.count += 1
-        if self.count == self.speed:
-            self.index += 1
-            if self.index == len(self.images):
-                self.index = 0
-            sprite.image = self.images[self.index]
 
