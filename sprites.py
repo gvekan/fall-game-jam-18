@@ -1,14 +1,6 @@
 import pygame
 from constants import *
 
-class All(pygame.sprite.Group):
-    def __init__(self):
-        pygame.sprite.Group.__init__(self)
-
-    def update(self, *args):
-        for s in self.sprites():
-            s.update()
-
 class Animation:
     def __init__(self, images, speed):
         self.index = 0
@@ -24,6 +16,21 @@ class Animation:
                 self.index = 0
             sprite.image = self.images[self.index]
             self.count = 0
+
+
+class AnimationSprite(pygame.sprite.Sprite, Animation):
+    def __init__(self, images, pos):
+        Animation.__init__(self, images, 5)
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = self.images[0]
+        self.rect = self.image.get_rect()
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
+
+    def update(self, state):
+        Animation.update(self, self)
+
 
 class Player(pygame.sprite.Sprite, Animation):
     def __init__(self):
@@ -47,7 +54,7 @@ class Player(pygame.sprite.Sprite, Animation):
         self.rect = self.image.get_rect()
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
-        self.speed_mult = 21
+        self.speed_mult = 5
 
     def set_direction(self, d):
         if self.direction == Direction.STOP:
@@ -66,7 +73,6 @@ class Player(pygame.sprite.Sprite, Animation):
                 state.game_over = True
             self.direction = self.buffer
             self.buffer = Direction.STOP
-
 
 
 

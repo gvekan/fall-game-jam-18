@@ -19,7 +19,7 @@ def main():
 
         controller.handle_events(state)
 
-        state.all_units.update(state)
+        state.update()
 
         graphics.update_screen(screen, state)
 
