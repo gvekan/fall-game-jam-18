@@ -17,17 +17,24 @@ class Generator:
         self.part_next_x -= state.scroll_length
         if self.part_next_x <= 0:
             # TODO: add big obstacle or background part as add_road()
+            self.add_parts(state)
             self.add_obstacle(state)
-            self.part_next_x = LANE_HEIGHT*2+self.part_next_x
+            self.part_next_x = LANE_HEIGHT+self.part_next_x
 
 
     def add_road(self, state: State):
-        r = AnimationSprite(IMG_ROAD, (WINDOW_SIZE[0]+self.road_next_x+state.scroll_length, LANE_START_Y), SCENERY_HITBOX)
+        r = AnimationSprite(IMG_ROAD, (WINDOW_SIZE[0]+self.road_next_x+state.scroll_length, LANE_START_Y))
         state.all_units.add(r)
         state.scroll_objects.add(r)
         state.graphic.add(r)
         state.graphic.change_layer(r, BACKGROUND_LAYER)
 
+    def add_parts(self, state: State):
+        b = AnimationSprite(IMG_BOTTOM_PART, (WINDOW_SIZE[0]+self.part_next_x+state.scroll_length, WINDOW_SIZE[1]-LANE_HEIGHT))
+        state.all_units.add(b)
+        state.scroll_objects.add(b)
+        state.graphic.add(b)
+        state.graphic.change_layer(b, BACKGROUND_LAYER)
 
     def add_obstacle(self, state: State):
         obj = AnimationSprite(IMG_OBSTACLE,

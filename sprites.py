@@ -21,7 +21,7 @@ class Animation:
 
 
 class AnimationSprite(pygame.sprite.Sprite, Animation):
-    def __init__(self, images, pos, hitbox):
+    def __init__(self, images, pos, hitbox=SCENERY_HITBOX):
         Animation.__init__(self, images[1], 5)
         pygame.sprite.Sprite.__init__(self)
 
