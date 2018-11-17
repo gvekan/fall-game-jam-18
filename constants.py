@@ -24,6 +24,7 @@ test2.fill((0,255,255))
 pygame.display.init()
 pygame.display.set_mode()
 
+
 IMG_ROAD = [[pygame.image.load("src/medieval_road.png").convert_alpha()],
             [pygame.image.load("src/present_road.bmp").convert_alpha()],
             [pygame.image.load("src/future_road.bmp").convert_alpha()]]
@@ -53,6 +54,7 @@ for i, image in enumerate(IMG_OBSTACLE):
 IMG_CASTLE = [[pygame.image.load("src/castle1.png").convert_alpha()],
               [pygame.image.load("src/castle2.png").convert_alpha()],
               [pygame.image.load("src/castle3.png").convert_alpha()]]
+
 
 BACKGROUND_LAYER = 0
 OBSTACLE_LAYER = 1

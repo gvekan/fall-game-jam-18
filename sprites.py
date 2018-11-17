@@ -86,11 +86,13 @@ class Player(pygame.sprite.Sprite, Animation):
             self.era = state.era
             self.animation = IMG_PLAYER[self.era]
             self.image = self.animation[0]
+
+        self.rect.y += self.direction.value * self.speed
         self.hitbox.midbottom = self.rect.midbottom
         Animation.update(self, self)
-        self.rect.y += self.direction.value * self.speed
-        if (self.rect.y - LANE_START_Y + LANE_HEIGHT//2 + PLAYER_SIZE[1]//2) % LANE_HEIGHT < self.speed:
-            if self.rect.y + PLAYER_SIZE[1]//2 < LANE_START_Y or self.rect.y + PLAYER_SIZE[1]//2 > LANE_START_Y + LANE_HEIGHT*N_LANES:
+        if (self.hitbox.center[1] - LANE_START_Y + LANE_HEIGHT//2) % LANE_HEIGHT < self.speed:
+            # Check if outside road
+            if self.hitbox.y + PLAYER_SIZE[1]//2 < LANE_START_Y or self.rect.y + PLAYER_SIZE[1]//2 > LANE_START_Y + LANE_HEIGHT*N_LANES:
                 state.game_over = True
             self.direction = self.buffer
             self.buffer = Direction.STOP
