@@ -24,13 +24,11 @@ class State:
         self.graphic = pygame.sprite.LayeredUpdates()
         self.graphic.layers()
 
-        road1 = sprites.AnimationSprite(IMG_ROAD, (0, LANE_START_Y))
+        road1 = sprites.AnimationSprite(IMG_ROAD, (0, 0))
 
         self.scroll_objects.add(road1)
         self.all_units.add(road1, self.player)
         self.graphic.add(road1, self.player)
-
-        self.set_bottom()
 
         self.graphic.change_layer(self.player, 2)
         self.graphic.change_layer(road1, 0)
@@ -71,12 +69,6 @@ class State:
         if self.era < 0 or self.era > 2:
             self.game_over = True
 
-    def set_bottom(self):
-        for x in range(0,WINDOW_SIZE[0], 200):
-            a = sprites.AnimationSprite(IMG_BOTTOM_PART, (x, WINDOW_SIZE[1]-LANE_HEIGHT))
-            self.scroll_objects.add(a)
-            self.all_units.add(a, self.player)
-            self.graphic.add(a, self.player)
-            self.graphic.change_layer(a, BACKGROUND_LAYER)
+
 
 

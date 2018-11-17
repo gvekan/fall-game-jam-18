@@ -4,13 +4,13 @@ from constants import *
 
 pygame.font.init()
 def update_screen(screen, state):
-    screen.fill((0,0,0))  # background
+    screen.fill((150,0,255))  # background
     if state.game_over:
+        screen.blit(IMG_ROAD[state.era][0], (0,0))
         myfont = pygame.font.SysFont('Comic Sans MS', 72)
         textsurface = myfont.render('GAME OVER, score: {}'.format(state.score), False, (255, 255, 255))
         screen.blit(textsurface, (100, 100))
     else:
-
         state.graphic.draw(screen)  # units
         if DEBUG:
             for u in state.all_units:
