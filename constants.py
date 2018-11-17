@@ -13,13 +13,13 @@ LANE_HEIGHT = 200
 N_LANES = 3
 LANE_START_Y = 200
 SPACE = 200
-DEBUG = True
+DEBUG = False
 
 pygame.display.init()
 pygame.display.set_mode()
 
 
-IMG_ROAD = [[pygame.image.load("src/medieval_road.png").convert_alpha()],
+IMG_ROAD = [[pygame.image.load("src/past_road.bmp").convert_alpha()],
             [pygame.image.load("src/present_road.bmp").convert_alpha()],
             [pygame.image.load("src/future_road2.bmp").convert_alpha()]]
 
