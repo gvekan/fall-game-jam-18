@@ -42,7 +42,7 @@ class State:
 
     @property
     def scroll_length(self):
-        return 7 + self.time//600
+        return 14 + self.time//300
 
     def update(self):
         if not self.game_over:

@@ -18,7 +18,7 @@ def main():
     generator = g.Generator()
 
     while state.running:
-        clock.tick(60)
+        clock.tick(30)
 
         controller.handle_events(state)
 

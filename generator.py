@@ -19,13 +19,12 @@ class Generator:
         if self.part_next_x <= 0:
             # TODO: add big obstacle or background part as add_road()
             self.add_parts(state)
-            self.add_obstacle(state)
             self.part_next_x = LANE_HEIGHT+self.part_next_x
 
         self.obstacle_next_x -= state.scroll_length
-        if self.part_next_x <= 0:
+        if self.obstacle_next_x <= 0:
             w = self.add_obstacle(state)
-            self.part_next_x = w+random.randrange(1,3)*SPACE+self.part_next_x
+            self.obstacle_next_x = w+random.randrange(1,3)*SPACE+self.obstacle_next_x
 
 
 
@@ -44,7 +43,6 @@ class Generator:
         state.graphic.change_layer(b, BACKGROUND_LAYER)
 
     def add_obstacle(self, state: State):
-
         animal = AnimationSprite(IMG_OBSTACLE,
                                  (WINDOW_SIZE[0], LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2),
                                  [pygame.rect.Rect((1000,1000), (140,100)),

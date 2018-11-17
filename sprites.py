@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite, Animation):
         self.direction = Direction.STOP
         self.buffer = Direction.STOP
         self.era = 1
-        self.speed = 15
+        self.speed = 30
         self.hitbox = PLAYER_HITBOX
         self.hitbox.midbottom = self.rect.midbottom
 
