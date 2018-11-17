@@ -14,3 +14,5 @@ class State:
         self.all_units = pygame.sprite.Group()
         self.all_units.add(self.player)
         self.running = True  # True as long as the game should be running
+        self.kill = set()
+
