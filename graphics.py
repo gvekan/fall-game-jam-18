@@ -10,6 +10,7 @@ def update_screen(screen, state):
         textsurface = myfont.render('GAME OVER, score: {}'.format(state.time//60), False, (255, 255, 255))
         screen.blit(textsurface, (100, 100))
     else:
+
         state.graphic.draw(screen)  # units
         if DEBUG:
             for u in state.all_units:
