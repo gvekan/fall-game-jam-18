@@ -16,16 +16,22 @@ def main():
     screen = pygame.display.set_mode(WINDOW_SIZE)
 
     generator = g.Generator()
+
     while state.running:
         clock.tick(60)
 
         controller.handle_events(state)
 
-        generator.update(state) #Has to be before state.update()
+        if state.reset:
+            state = game_state.State()
+            generator = g.Generator()
+
+        generator.update(state) # Has to be before state.update()
 
         state.update()
 
         graphics.update_screen(screen, state)
+
 
 
 

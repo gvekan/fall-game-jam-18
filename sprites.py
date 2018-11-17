@@ -8,6 +8,7 @@ class Animation:
         self.speed = speed
         self.count = 0
 
+
     def update(self, sprite: pygame.sprite.Sprite):
         if len(self.images) > 1:
             self.count += 1
@@ -28,9 +29,11 @@ class AnimationSprite(pygame.sprite.Sprite, Animation):
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
+        self.images_nr = 1
 
     def update(self, state):
         Animation.update(self, self)
+
 
 
 class Player(pygame.sprite.Sprite, Animation):
@@ -44,12 +47,8 @@ class Player(pygame.sprite.Sprite, Animation):
             images.append(image)
         """
 
-        images = [pygame.image.load("src/tr1.png"), pygame.image.load("src/tr2.png"), pygame.image.load("src/tr1.png"), pygame.image.load("src/tr3.png")]
-        for i, image in enumerate(images):
-            images[i] = pygame.transform.scale(image, PLAYER_SIZE)
-
         pygame.sprite.Sprite.__init__(self)
-        Animation.__init__(self, images, 5)
+        Animation.__init__(self, IMG_MEDIEVAL_PLAYER, 5)
 
         self.image = self.images[0]
         self.rect = self.image.get_rect()

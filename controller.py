@@ -2,7 +2,6 @@ import pygame
 
 from constants import Direction
 
-
 def handle_keydown(event, state):
     if event.key == pygame.K_UP:
         state.player.set_direction(Direction.UP)
@@ -13,7 +12,7 @@ def handle_keydown(event, state):
     elif event.key == pygame.K_x:
         state.time_travel(Direction.UP)
     elif event.key == pygame.K_r:
-        state.reset()
+        state.reset = True
 
 
 def handle_events(state):

@@ -10,11 +10,10 @@ def update_screen(screen, state):
         textsurface = myfont.render('GAME OVER, score: {}'.format(state.time//60), False, (255, 255, 255))
         screen.blit(textsurface, (100, 100))
     else:
-        for i in range(3):
-            pygame.draw.rect(screen, [128 - 32 * state.era, 127 + 32 * state.era, 0],
-                [0, (i + 1) * LANE_HEIGHT, WINDOW_SIZE[0], LANE_HEIGHT - 1])  # lanes
+
         state.graphic.draw(screen)  # units
 
+        # Draw timeline
         pygame.draw.line(screen, (255,255,255), (WINDOW_SIZE[0]//2, LANE_START_Y//2), (WINDOW_SIZE[0]*3/4, LANE_START_Y//2), 5)
         for i, x in enumerate(range(WINDOW_SIZE[0]//2, (WINDOW_SIZE[0]*3)//4 +1, WINDOW_SIZE[0]//16)):
             pygame.draw.line(screen, (255, 255, 255), (x, LANE_START_Y // 2 - 10), (x, LANE_START_Y // 2 + 10), 5)
@@ -23,6 +22,6 @@ def update_screen(screen, state):
 
         myfont = pygame.font.SysFont('Comic Sans MS', 30)
         textsurface = myfont.render('Time: {}'.format(state.time // 60), False, (255, 255, 255))
-        screen.blit(textsurface, (100, 100))
+        screen.blit(textsurface, (100, LANE_START_Y//2 - 15))
 
     pygame.display.flip()  # update

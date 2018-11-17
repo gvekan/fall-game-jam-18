@@ -12,14 +12,13 @@ class Generator:
         self.road_next_x -= state.scroll_length
         if self.road_next_x <= 0:
             self.add_road(state)
-            self.road_next_x = WINDOW_SIZE[0]+self.road_next_x-state.scroll_length
+            self.road_next_x = WINDOW_SIZE[0]+self.road_next_x
 
         self.part_next_x -= state.scroll_length
         if self.part_next_x <= 0:
             # TODO: add big obstacle or background part as add_road()
             self.add_obstacle(state)
-            self.part_next_x = LANE_HEIGHT+self.part_next_x-state.scroll_length
-
+            self.part_next_x = LANE_HEIGHT*2+self.part_next_x
 
 
     def add_road(self, state: State):
@@ -29,10 +28,9 @@ class Generator:
         state.graphic.add(r)
         state.graphic.change_layer(r, BACKGROUND_LAYER)
 
+
     def add_obstacle(self, state: State):
-        images = [pygame.image.load("src/tr1.png")]
-        images[0] = pygame.transform.scale(images[0], PLAYER_SIZE)
-        obj = AnimationSprite(images, (WINDOW_SIZE[0]+self.road_next_x+state.scroll_length, LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2))
+        obj = AnimationSprite(IMG_MEDIEVAL_PLAYER, (WINDOW_SIZE[0], LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2))
         state.all_units.add(obj)
         state.scroll_objects.add(obj)
         state.obstacles.add(obj)

@@ -23,8 +23,7 @@ class State:
         self.graphic = pygame.sprite.LayeredUpdates()
         self.graphic.layers()
 
-        images = [pygame.image.load("src/medieval_road.png")]
-        road1 = sprites.AnimationSprite(images, (0, LANE_START_Y))
+        road1 = sprites.AnimationSprite(IMG_MEDIEVAL_ROAD, (0, LANE_START_Y))
 
         self.scroll_objects.add(road1)
         self.all_units.add(road1, self.player)
@@ -36,10 +35,8 @@ class State:
 
         self.running = True  # True as long as the game should be running
         self.game_over = False
+        self.reset = False
         self.kill = set()
-
-    def reset(self):
-        self.__init__()
 
     @property
     def scroll_length(self):
@@ -63,14 +60,4 @@ class State:
             self.era += 1
         if self.era < 1 or self.era > 3:
             self.game_over = True
-
-    def add_obstacle(self):
-        images = [pygame.image.load("src/tr1.png")]
-        images[0] = pygame.transform.scale(images[0], PLAYER_SIZE)
-        obj = sprites.AnimationSprite(images, (WINDOW_SIZE[0], LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2))
-        self.all_units.add(obj)
-        self.scroll_objects.add(obj)
-        self.obstacles.add(obj)
-        self.graphic.add(obj)
-        self.graphic.change_layer(obj, 1)
 
