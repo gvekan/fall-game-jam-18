@@ -12,7 +12,6 @@ PLAYER_X = 150
 LANE_HEIGHT = 200
 N_LANES = 3
 LANE_START_Y = 200
-SPACE = 600
 DEBUG = True
 
 pygame.display.init()
@@ -56,6 +55,8 @@ IMG_CASTLE = [[pygame.image.load("src/castle1.png").convert_alpha()],
               [pygame.image.load("src/castle3.png").convert_alpha()]]
 
 IMG_TEST = pygame.image.load("src/test.png").convert_alpha()
+
+IMG_DEATH_TIME_TRAVEL = [pygame.image.load("src/past_road.bmp").convert_alpha(),None,pygame.image.load("src/death_by_future.bmp").convert_alpha()]
 
 BACKGROUND_LAYER = 0
 OBSTACLE_LAYER = 1

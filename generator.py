@@ -19,7 +19,7 @@ class Generator:
         self.obstacle_next_x -= state.scroll_length
         if self.obstacle_next_x <= 0:
             w = self.add_obstacle(state)
-            self.obstacle_next_x = w+random.random()*SPACE+self.obstacle_next_x
+            self.obstacle_next_x = w+self.obstacle_next_x+250*(1+random.random())
 
 
 

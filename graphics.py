@@ -3,11 +3,20 @@ import pygame
 from constants import *
 
 pygame.font.init()
+
+
+def death_screen(cause_of_death, era):
+    if cause_of_death == Hazard.TIME_TRAVEL:
+        return IMG_DEATH_TIME_TRAVEL[era]
+    return IMG_ROAD[era][0]
+
+
 def update_screen(screen, state):
     screen.fill((150,0,255))  # background
     if state.game_over:
 
-        screen.blit(IMG_ROAD[state.era][0], (0,0))
+        screen.blit(death_screen(state.cause_of_death, state.era), (0,0))
+
         myfont = pygame.font.SysFont('Comic Sans MS', 72)
         gameover = myfont.render('GAME OVER - Score: {} (Death by {})'.format(int(state.score), state.cause_of_death.name), False, (255, 255, 255))
         retry = myfont.render('Press SPACE to retry', False, (255, 255, 255))
