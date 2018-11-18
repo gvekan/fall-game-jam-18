@@ -55,6 +55,7 @@ IMG_CASTLE = [[pygame.image.load("src/castle1.png").convert_alpha()],
               [pygame.image.load("src/castle3.png").convert_alpha()]]
 
 IMG_TEST = pygame.image.load("src/test.png").convert_alpha()
+IMG_START = pygame.image.load("src/start_screen.png").convert_alpha()
 
 IMG_GLITCH = [pygame.image.load("src/glitch1.bmp").convert_alpha(),
               pygame.image.load("src/glitch2.bmp").convert_alpha(),

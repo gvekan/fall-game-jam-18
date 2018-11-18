@@ -20,14 +20,15 @@ def death_screen(cause_of_death, era):
 def update_screen(screen, state):
     screen.fill((150,0,255))  # background
     if state.game_over:
-
-        screen.blit(death_screen(state.cause_of_death, state.era), (0,0))
-
-        myfont = pygame.font.SysFont('Copperplate Gothic', 72)
-        gameover = myfont.render('GAME OVER - Score: {}'.format(int(state.score)), False, WHITE)
-        retry = myfont.render('Press SPACE to retry', False, WHITE)
-        screen.blit(gameover, (100, LANE_START_Y//2-36))
-        screen.blit(retry, (100, LANE_START_Y//2+36))
+        if state.cause_of_death:
+            screen.blit(death_screen(state.cause_of_death, state.era), (0,0))
+            myfont = pygame.font.SysFont('Copperplate Gothic', 72)
+            gameover = myfont.render('GAME OVER - Score: {}'.format(int(state.score)), False, WHITE)
+            retry = myfont.render('Press SPACE to retry', False, WHITE)
+            screen.blit(gameover, (100, LANE_START_Y//2-36))
+            screen.blit(retry, (100, LANE_START_Y//2+36))
+        else:
+            screen.blit(IMG_START, (0, 0))
     else:
         state.graphic.draw(screen)  # units
         if DEBUG:

@@ -8,7 +8,7 @@ from music import Music
 
 
 class State:
-    def __init__(self):
+    def __init__(self, go, music):
         self.time = 0
         self.era = 1
         self.score = 0
@@ -35,11 +35,11 @@ class State:
         self.graphic.change_layer(self.player, 2)
         self.graphic.change_layer(road1, 0)
 
-        self.music = Music()
+        self.music = music
         self.music.change(self.era)
 
         self.running = True  # True as long as the game should be running
-        self.game_over = False
+        self.game_over = go
         self.reset = False
         self.kill = set()
 
