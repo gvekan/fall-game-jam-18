@@ -12,7 +12,7 @@ PLAYER_X = 150
 LANE_HEIGHT = 200
 N_LANES = 3
 LANE_START_Y = 200
-DEBUG = True
+DEBUG = False
 
 pygame.display.init()
 pygame.display.set_mode()
@@ -44,17 +44,31 @@ for i, image in enumerate(IMG_FUTURE_PLAYER):
 
 IMG_PLAYER = [IMG_MEDIEVAL_PLAYER, IMG_PRESENT_PLAYER, IMG_FUTURE_PLAYER]
 
-IMG_OBSTACLE = [[pygame.image.load("src/sheep.png").convert_alpha()],
-                [pygame.image.load("src/car.png").convert_alpha()],
-                [pygame.image.load("src/alien.png").convert_alpha()]]
-for i, image in enumerate(IMG_OBSTACLE):
-    IMG_OBSTACLE[i][0] = pygame.transform.scale(image[0], PLAYER_SIZE)
+IMG_FAN = [[pygame.image.load("src/past_fans.png").convert_alpha()],
+           [pygame.image.load("src/present_fans.png").convert_alpha()],
+           [pygame.image.load("src/future_fans.png").convert_alpha()]]
+for i, image in enumerate(IMG_FAN):
+    IMG_FAN[i][0] = pygame.transform.scale(image[0], PLAYER_SIZE)
 
 IMG_CASTLE = [[pygame.image.load("src/castle1.png").convert_alpha()],
               [pygame.image.load("src/castle2.png").convert_alpha()],
               [pygame.image.load("src/castle3.png").convert_alpha()]]
 
 IMG_TEST = pygame.image.load("src/test.png").convert_alpha()
+
+IMG_GLITCH = [pygame.image.load("src/glitch1.bmp").convert_alpha(),
+              pygame.image.load("src/glitch2.bmp").convert_alpha(),
+              pygame.image.load("src/glitch3.bmp").convert_alpha()]
+
+IMG_RIVER1 = [[pygame.image.load("src/bridge1.bmp").convert_alpha()],
+             [pygame.transform.scale(IMG_TEST, (600,1000))],
+             IMG_GLITCH]
+IMG_RIVER2 = [[pygame.image.load("src/bridge2.bmp").convert_alpha()],
+             [pygame.transform.scale(IMG_TEST, (600,1000))],
+             IMG_GLITCH]
+IMG_RIVER3 = [[pygame.image.load("src/bridge3.bmp").convert_alpha()],
+             [pygame.transform.scale(IMG_TEST, (600,1000))],
+             IMG_GLITCH]
 
 IMG_DEATH_TIME_TRAVEL = [pygame.image.load("src/past_road.bmp").convert_alpha(),None,pygame.image.load("src/death_by_future.bmp").convert_alpha()]
 
@@ -73,3 +87,12 @@ class Hazard(Enum):
     FAN = 1
     CASTLE = 2
     RIVER = 3
+
+WHITE=(255,255,255)
+BLACK=(0,0,0)
+RED=(255,0,0)
+GREEN=(0,255,0)
+BLUE=(0,0,255)
+YELLOW=(255,255,0)
+PINK=(255,0,255)
+TURQUOISE=(0,255,255)

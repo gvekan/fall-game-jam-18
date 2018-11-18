@@ -51,7 +51,7 @@ class State:
         start = 20
         top = 80
         div = 100  # lower div -> faster increase
-        return int(start + (top-start)*self.score/(div+self.score))
+        return int(start + (top-start)*self.score/(div+self.score) + self.era)
 
     def update(self):
         if not self.game_over:
