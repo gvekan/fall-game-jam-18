@@ -12,7 +12,7 @@ def handle_keydown(event, state):
             state.time_travel(Direction.DOWN)
         elif event.key == pygame.K_x:
             state.time_travel(Direction.UP)
-    if event.key == pygame.K_r or event.key == pygame.K_SPACE:
+    if event.key == pygame.K_r or (event.key == pygame.K_SPACE and state.game_over):
         state.reset = True
 
 

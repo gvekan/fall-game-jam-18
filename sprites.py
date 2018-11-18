@@ -21,18 +21,22 @@ class Animation:
 
 
 class AnimationSprite(pygame.sprite.Sprite, Animation):
-    def __init__(self, images, pos, hitboxes=SCENERY_HITBOX, offsets = [(0,0), (0,0), (0,0)]):
-        Animation.__init__(self, images[1], 5)
+    def __init__(self, images, pos, hitboxes=SCENERY_HITBOX, offsets = [(0,0), (0,0), (0,0)], type:Hazard=None):
+        if not isinstance(images, list):
+            self.images = [[images], [images], [images]]
+        else:
+            self.images = images
+        Animation.__init__(self, self.images[1], 5)
         pygame.sprite.Sprite.__init__(self)
-
         if not isinstance(hitboxes, list):
             self.hitboxes = [hitboxes, hitboxes, hitboxes]
         elif len(hitboxes) != 3:
             raise AttributeError("Hitboxes list needs three elements.")
         else:
             self.hitboxes = hitboxes
-        self.images = images
+
         self.offsets = offsets
+        self.type = type
         self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
@@ -40,7 +44,11 @@ class AnimationSprite(pygame.sprite.Sprite, Animation):
         self.era = 1
         self.hitbox = self.hitboxes[1]
         self.offset = self.offsets[1]
-        self.hitbox.midbottom = self.rect.midbottom
+        if isinstance(self.hitbox, list):
+            for h in self.hitbox:
+                h.midbottom = self.rect.midbottom
+        else:
+            self.hitbox.midbottom = self.rect.midbottom
 
 
     def update(self, state):
@@ -51,11 +59,23 @@ class AnimationSprite(pygame.sprite.Sprite, Animation):
             self.hitbox = self.hitboxes[self.era]
             self.offset = self.offsets[self.era]
 
-        self.hitbox.midbottom = (self.rect.midbottom[0] + self.offset[0], self.rect.midbottom[1] + self.offset[1])
+        if isinstance(self.hitbox, list):
+            for i, h in enumerate(self.hitbox):
+                h.midbottom = (
+                self.rect.midbottom[0] + self.offset[i][0], self.rect.midbottom[1] + self.offset[i][1])
+
+        else:
+            self.hitbox.midbottom = (self.rect.midbottom[0] + self.offset[0], self.rect.midbottom[1] + self.offset[1])
         Animation.update(self, self)
 
     def collision(self, other):
-        return self.hitbox.colliderect(other.hitbox)
+        if isinstance(self.hitbox, list):
+            for h in self.hitbox:
+                if h.colliderect(other.hitbox):
+                    return True
+            return False
+        else:
+            return self.hitbox.colliderect(other.hitbox)
 
 
 
@@ -94,6 +114,7 @@ class Player(pygame.sprite.Sprite, Animation):
             # Check if outside road
             if self.hitbox.y + PLAYER_SIZE[1]//2 < LANE_START_Y or self.rect.y + PLAYER_SIZE[1]//2 > LANE_START_Y + LANE_HEIGHT*N_LANES:
                 state.game_over = True
+                state.cause_of_death = Hazard.CRASH
             self.direction = self.buffer
             self.buffer = Direction.STOP
 
@@ -117,6 +138,8 @@ class Obstacles(pygame.sprite.Group):
         for s in self.sprites():
             if s.collision(state.player):
                 state.game_over = True
+                if s.type:
+                    state.cause_of_death = s.type
 
 
 

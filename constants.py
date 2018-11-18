@@ -12,12 +12,10 @@ PLAYER_X = 150
 LANE_HEIGHT = 200
 N_LANES = 3
 LANE_START_Y = 200
-SPACE = 200
-DEBUG = False
+DEBUG = True
 
 pygame.display.init()
 pygame.display.set_mode()
-
 
 IMG_ROAD = [[pygame.image.load("src/past_road.bmp").convert_alpha()],
             [pygame.image.load("src/present_road.bmp").convert_alpha()],
@@ -56,6 +54,9 @@ IMG_CASTLE = [[pygame.image.load("src/castle1.png").convert_alpha()],
               [pygame.image.load("src/castle2.png").convert_alpha()],
               [pygame.image.load("src/castle3.png").convert_alpha()]]
 
+IMG_TEST = pygame.image.load("src/test.png").convert_alpha()
+
+IMG_DEATH_TIME_TRAVEL = [pygame.image.load("src/past_road.bmp").convert_alpha(),None,pygame.image.load("src/death_by_future.bmp").convert_alpha()]
 
 BACKGROUND_LAYER = 0
 OBSTACLE_LAYER = 1
@@ -65,3 +66,10 @@ class Direction(Enum):
     UP = -1
     STOP = 0
     DOWN = 1
+
+class Hazard(Enum):
+    TIME_TRAVEL = -1
+    CRASH = 0
+    FAN = 1
+    CASTLE = 2
+    RIVER = 3

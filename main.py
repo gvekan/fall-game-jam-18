@@ -37,7 +37,7 @@ def main():
 
         graphics.update_screen(screen, state)
 
-
+    pygame.quit()
 
 
 
