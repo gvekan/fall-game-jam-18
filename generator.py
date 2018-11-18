@@ -19,7 +19,8 @@ class Generator:
         self.obstacle_next_x -= state.scroll_length
         if self.obstacle_next_x <= 0:
             w = self.add_obstacle(state)
-            self.obstacle_next_x = w+self.obstacle_next_x+250*(1+random.random())
+            self.obstacle_next_x = w+self.obstacle_next_x+PLAYER_SIZE[0]*(1+random.random())
+
 
 
 
@@ -41,7 +42,7 @@ class Generator:
         state.obstacles.add(obj)
         state.graphic.add(obj)
         state.graphic.change_layer(obj, OBSTACLE_LAYER)
-        return obj.hitbox.width
+        return obj.rect.width
 
 
     def get_hazard(self, hazard: Hazard, version=0) -> AnimationSprite:
@@ -52,7 +53,7 @@ class Generator:
 
         if hazard == Hazard.FAN:
             y = LANE_START_Y + (version-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2
-            return AnimationSprite(IMG_OBSTACLE,
+            return AnimationSprite(IMG_FAN,
                                    (WINDOW_SIZE[0], y),
                                    pygame.rect.Rect((1000, 1000), (140, 100)),
                                    type=hazard)
@@ -68,15 +69,18 @@ class Generator:
 
         if hazard == Hazard.RIVER:
             if version == 1:
-                past_hitbox = pygame.rect.Rect((1000, 1000), (200, 600))
+                image = IMG_RIVER1
+                past_hitbox = pygame.rect.Rect((1000, 1000), (400, 600))
                 past_offset = (0,0)
             elif version == 2:
-                past_hitbox = [pygame.rect.Rect((1000, 1000), (200, 400)),pygame.rect.Rect((1000, 1000), (200, 400))]
+                image = IMG_RIVER2
+                past_hitbox = [pygame.rect.Rect((1000, 1000), (400, 400)),pygame.rect.Rect((1000, 1000), (400, 400))]
                 past_offset = [(0,0),(0,-600)]
             elif version == 3:
-                past_hitbox = pygame.rect.Rect((1000, 1000), (200, 600))
+                image = IMG_RIVER3
+                past_hitbox = pygame.rect.Rect((1000, 1000), (400, 600))
                 past_offset = (0,-400)
-            return AnimationSprite(self.test_sprite((400,1000)),
+            return AnimationSprite(image,
                                    (WINDOW_SIZE[0], 0),
                                    [past_hitbox,
                                     pygame.rect.Rect((1000, 1000), (200, 1000)),

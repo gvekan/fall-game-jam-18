@@ -61,9 +61,7 @@ class AnimationSprite(pygame.sprite.Sprite, Animation):
 
         if isinstance(self.hitbox, list):
             for i, h in enumerate(self.hitbox):
-                h.midbottom = (
-                self.rect.midbottom[0] + self.offset[i][0], self.rect.midbottom[1] + self.offset[i][1])
-
+                h.midbottom = (self.rect.midbottom[0] + self.offset[i][0], self.rect.midbottom[1] + self.offset[i][1])
         else:
             self.hitbox.midbottom = (self.rect.midbottom[0] + self.offset[0], self.rect.midbottom[1] + self.offset[1])
         Animation.update(self, self)

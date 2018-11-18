@@ -8,9 +8,10 @@ from music import Music
 
 
 class State:
-    def __init__(self):
+    def __init__(self, go, music):
         self.time = 0
         self.era = 1
+        self.score = 0
         self.cause_of_death = None
         self.player = sprites.Player()
         self.player.rect.x = PLAYER_X
@@ -34,16 +35,16 @@ class State:
         self.graphic.change_layer(self.player, 2)
         self.graphic.change_layer(road1, 0)
 
-        self.music = Music()
+        self.music = music
         self.music.change(self.era)
 
         self.running = True  # True as long as the game should be running
-        self.game_over = False
+        self.game_over = go
         self.reset = False
         self.kill = set()
 
     @property
-    def score(self):
+    def time_sec(self):
         return self.time/30
 
     @property
@@ -51,7 +52,7 @@ class State:
         start = 20
         top = 80
         div = 100  # lower div -> faster increase
-        return int(start + (top-start)*self.score/(div+self.score))
+        return int(start + (top-start) * self.time_sec / (div + self.time_sec) + self.era)
 
     def update(self):
         if not self.game_over:
@@ -62,6 +63,7 @@ class State:
             for unit in self.kill:
                 unit.kill()
             self.time += 1
+            self.score += self.scroll_length/100
 
 
     def time_travel(self, d):

@@ -7,6 +7,10 @@ from constants import *
 import generator as g
 import os
 import ctypes
+
+from music import Music
+
+
 def main():
     user32 = ctypes.windll.user32
     screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
@@ -17,7 +21,7 @@ def main():
 
     clock = pygame.time.Clock()
 
-    state = game_state.State()
+    state = game_state.State(True, Music())
 
     screen = pygame.display.set_mode(WINDOW_SIZE)
     generator = g.Generator()
@@ -28,7 +32,8 @@ def main():
         controller.handle_events(state)
 
         if state.reset:
-            state = game_state.State()
+            m = state.music
+            state = game_state.State(False, m)
             generator = g.Generator()
 
         generator.update(state) # Has to be before state.update()
