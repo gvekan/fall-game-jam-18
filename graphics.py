@@ -17,7 +17,11 @@ def update_screen(screen, state):
         state.graphic.draw(screen)  # units
         if DEBUG:
             for u in state.all_units:
-                pygame.draw.rect(screen, (255,0,127), [u.hitbox.x, u.hitbox.y, u.hitbox.width, u.hitbox.height], 4)
+                if isinstance(u.hitbox, list):
+                    for h in u.hitbox:
+                        pygame.draw.rect(screen, (255, 0, 127), [h.x, h.y, h.width, h.height], 4)
+                else:
+                    pygame.draw.rect(screen, (255,0,127), [u.hitbox.x, u.hitbox.y, u.hitbox.width, u.hitbox.height], 4)
 
         # Draw timeline
         pygame.draw.line(screen, (255,255,255), (WINDOW_SIZE[0]//2, LANE_START_Y//2), (WINDOW_SIZE[0]*3/4, LANE_START_Y//2), 5)

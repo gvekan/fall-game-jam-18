@@ -19,7 +19,7 @@ class Generator:
         self.obstacle_next_x -= state.scroll_length
         if self.obstacle_next_x <= 0:
             w = self.add_obstacle(state)
-            self.obstacle_next_x = w+random.random()*3*SPACE+self.obstacle_next_x
+            self.obstacle_next_x = w+random.random()*SPACE+self.obstacle_next_x
 
 
 
@@ -32,10 +32,10 @@ class Generator:
 
 
     def add_obstacle(self, state: State):
-        animal = self.get_hazard(Hazard.FAN, LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2)
-        castle = self.get_hazard(Hazard.CASTLE)
-        river = self.get_hazard(Hazard.RIVER)
-        obj = random.choice([animal, animal, animal, animal, castle])
+        obj = random.choices([self.get_hazard(Hazard.FAN),
+                              self.get_hazard(Hazard.CASTLE),
+                              self.get_hazard(Hazard.RIVER)],
+                             weights=[4, 1, 1])[0]
         state.all_units.add(obj)
         state.scroll_objects.add(obj)
         state.obstacles.add(obj)
@@ -44,12 +44,19 @@ class Generator:
         return obj.hitbox.width
 
 
-    def get_hazard(self, hazard: Hazard, y:int=0) -> AnimationSprite:
+    def get_hazard(self, hazard: Hazard, version=0) -> AnimationSprite:
+        if version < 0 or version > 3:
+            raise AttributeError("Version number needs to be 0 (random) or 1-3")
+        if version == 0:
+            version = random.randint(1, 3)
+
         if hazard == Hazard.FAN:
+            y = LANE_START_Y + (version-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2
             return AnimationSprite(IMG_OBSTACLE,
                                    (WINDOW_SIZE[0], y),
                                    pygame.rect.Rect((1000, 1000), (140, 100)),
                                    type=hazard)
+
         if hazard == Hazard.CASTLE:
             return AnimationSprite(IMG_CASTLE,
                                    (WINDOW_SIZE[0], 0),
@@ -58,13 +65,23 @@ class Generator:
                                     pygame.rect.Rect((1000, 1000), (400, 000))],
                                    [(0, 0), (0, -200), (0, 0)],
                                    type=hazard)
+
         if hazard == Hazard.RIVER:
+            if version == 1:
+                past_hitbox = pygame.rect.Rect((1000, 1000), (200, 600))
+                past_offset = (0,0)
+            elif version == 2:
+                past_hitbox = [pygame.rect.Rect((1000, 1000), (200, 400)),pygame.rect.Rect((1000, 1000), (200, 400))]
+                past_offset = [(0,0),(0,-600)]
+            elif version == 3:
+                past_hitbox = pygame.rect.Rect((1000, 1000), (200, 600))
+                past_offset = (0,-400)
             return AnimationSprite(self.test_sprite((400,1000)),
                                    (WINDOW_SIZE[0], 0),
-                                   [pygame.rect.Rect((1000, 1000), (200, 600)),
+                                   [past_hitbox,
                                     pygame.rect.Rect((1000, 1000), (200, 1000)),
                                     pygame.rect.Rect((1000, 1000), (200, 1000))],
-                                   [(0, 0), (0, 0), (0, 0)],
+                                   [past_offset, (0, 0), (0, 0)],
                                    type=hazard)
 
     def test_sprite(self, size):

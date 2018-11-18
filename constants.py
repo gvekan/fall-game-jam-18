@@ -12,7 +12,7 @@ PLAYER_X = 150
 LANE_HEIGHT = 200
 N_LANES = 3
 LANE_START_Y = 200
-SPACE = 200
+SPACE = 600
 DEBUG = True
 
 pygame.display.init()
