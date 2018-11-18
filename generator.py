@@ -32,18 +32,9 @@ class Generator:
 
 
     def add_obstacle(self, state: State):
-        animal = AnimationSprite(IMG_OBSTACLE,
-                                 (WINDOW_SIZE[0], LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2),
-                                 [pygame.rect.Rect((1000,1000), (140,100)),
-                                  pygame.rect.Rect((1000,1000), (140,100)),
-                                  pygame.rect.Rect((1000,1000), (140,100))],
-                                 [(0,0),(0,0),(0,0)])
-        castle = AnimationSprite(IMG_CASTLE,
-                                 (WINDOW_SIZE[0], 0),
-                                 [pygame.rect.Rect((1000, 1000), (400, 600)),
-                                  pygame.rect.Rect((1000, 1000), (400, 400)),
-                                  pygame.rect.Rect((1000, 1000), (400, 000))],
-                                 [(0, 0), (0, -200), (0, 0)])
+        animal = self.get_hazard(Hazard.FAN, LANE_START_Y + (random.randint(1, N_LANES)-.5)*LANE_HEIGHT - PLAYER_SIZE[1]//2)
+        castle = self.get_hazard(Hazard.CASTLE)
+        river = self.get_hazard(Hazard.RIVER)
         obj = random.choice([animal, animal, animal, animal, castle])
         state.all_units.add(obj)
         state.scroll_objects.add(obj)
@@ -51,3 +42,30 @@ class Generator:
         state.graphic.add(obj)
         state.graphic.change_layer(obj, OBSTACLE_LAYER)
         return obj.hitbox.width
+
+
+    def get_hazard(self, hazard: Hazard, y:int=0) -> AnimationSprite:
+        if hazard == Hazard.FAN:
+            return AnimationSprite(IMG_OBSTACLE,
+                                   (WINDOW_SIZE[0], y),
+                                   pygame.rect.Rect((1000, 1000), (140, 100)),
+                                   type=hazard)
+        if hazard == Hazard.CASTLE:
+            return AnimationSprite(IMG_CASTLE,
+                                   (WINDOW_SIZE[0], 0),
+                                   [pygame.rect.Rect((1000, 1000), (400, 600)),
+                                    pygame.rect.Rect((1000, 1000), (400, 400)),
+                                    pygame.rect.Rect((1000, 1000), (400, 000))],
+                                   [(0, 0), (0, -200), (0, 0)],
+                                   type=hazard)
+        if hazard == Hazard.RIVER:
+            return AnimationSprite(self.test_sprite((400,1000)),
+                                   (WINDOW_SIZE[0], 0),
+                                   [pygame.rect.Rect((1000, 1000), (200, 600)),
+                                    pygame.rect.Rect((1000, 1000), (200, 1000)),
+                                    pygame.rect.Rect((1000, 1000), (200, 1000))],
+                                   [(0, 0), (0, 0), (0, 0)],
+                                   type=hazard)
+
+    def test_sprite(self, size):
+        return pygame.transform.scale(IMG_TEST, size)

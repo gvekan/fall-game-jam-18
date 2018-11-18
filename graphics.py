@@ -6,16 +6,13 @@ pygame.font.init()
 def update_screen(screen, state):
     screen.fill((150,0,255))  # background
     if state.game_over:
-        if state.era == -1:
-            e = 0
-        elif state.era ==3:
-            e = 2
-        else:
-            e = state.era
-        screen.blit(IMG_ROAD[e][0], (0,0))
+
+        screen.blit(IMG_ROAD[state.era][0], (0,0))
         myfont = pygame.font.SysFont('Comic Sans MS', 72)
-        textsurface = myfont.render('GAME OVER, score: {}'.format(state.score), False, (255, 255, 255))
-        screen.blit(textsurface, (100, 100))
+        gameover = myfont.render('GAME OVER - Score: {} (Death by {})'.format(int(state.score), state.cause_of_death.name), False, (255, 255, 255))
+        retry = myfont.render('Press SPACE to retry', False, (255, 255, 255))
+        screen.blit(gameover, (100, LANE_START_Y//2-36))
+        screen.blit(retry, (100, LANE_START_Y//2+36))
     else:
         state.graphic.draw(screen)  # units
         if DEBUG:
@@ -30,7 +27,9 @@ def update_screen(screen, state):
                 pygame.draw.circle(screen, (255, 0, 0), (x, LANE_START_Y//2), 20, 0)
 
         myfont = pygame.font.SysFont('Comic Sans MS', 30)
-        textsurface = myfont.render('Time: {}'.format(state.score), False, (255, 255, 255))
-        screen.blit(textsurface, (100, LANE_START_Y//2 - 15))
+        stats = myfont.render('Time: {}, Speed: {}'.format(int(state.score), int(state.scroll_length)), False, (255, 255, 255))
+        controlls = myfont.render('Move: UP/DOWN         Time Travel: Z/X', False, (255, 255, 255))
+        screen.blit(stats, (100, LANE_START_Y//2 - 15))
+        screen.blit(controlls, (100, WINDOW_SIZE[1] - LANE_START_Y//2 - 15))
 
     pygame.display.flip()  # update

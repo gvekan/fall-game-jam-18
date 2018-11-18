@@ -11,6 +11,7 @@ class State:
     def __init__(self):
         self.time = 0
         self.era = 1
+        self.cause_of_death = None
         self.player = sprites.Player()
         self.player.rect.x = PLAYER_X
         self.player.rect.y = LANE_START_Y + 1.5*LANE_HEIGHT - PLAYER_SIZE[1] + self.player.hitbox.height//2
@@ -43,11 +44,14 @@ class State:
 
     @property
     def score(self):
-        return self.time//30
+        return self.time/30
 
     @property
     def scroll_length(self):
-        return 24 + self.time//300
+        start = 20
+        top = 80
+        div = 100  # lower div -> faster increase
+        return int(start + (top-start)*self.score/(div+self.score))
 
     def update(self):
         if not self.game_over:
@@ -66,8 +70,14 @@ class State:
         elif d == Direction.UP:
             self.era += 1
         self.music.change(self.era)
-        if self.era < 0 or self.era > 2:
+        if self.era < 0:
+            self.era = 0
             self.game_over = True
+            self.cause_of_death = Hazard.TIME_TRAVEL
+        elif self.era > 2:
+            self.era = 2
+            self.game_over = True
+            self.cause_of_death = Hazard.TIME_TRAVEL
 
 
 
